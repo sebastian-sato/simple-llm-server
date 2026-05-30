@@ -5,4 +5,4 @@ PORT = "8000"
 URL = f"http://{SERVER_IP}:{PORT}/chat"
 
 def sendAndRecieve(payload):
-    return requests.post(URL, json=server_payload, timeout=60)
+    return requests.post(URL, json=payload, timeout=60)
