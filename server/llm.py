@@ -28,18 +28,11 @@ model = AutoModelForCausalLM.from_pretrained(
 )
 
 def generate(chat, max_new):
-    done = False
-    while not done:
-        try:
-            os.system("clear")
-            prompt = tokenizer.apply_chat_template(chat, tokenize=False, add_generation_prompt=True)
-            inputs = tokenizer.encode(prompt, add_special_tokens=False, return_tensors="pt")
-            outputs = model.generate(input_ids=inputs.to(model.device), max_new_tokens=max_new)
-            done = True
-        except:
-            del(chat[0])
-            del(chat[0])
+    prompt = tokenizer.apply_chat_template(chat, tokenize=False, add_generation_prompt=True)
+    inputs = tokenizer.encode(prompt, add_special_tokens=False, return_tensors="pt")
+    outputs = model.generate(input_ids=inputs.to(model.device), max_new_tokens=max_new)
     text = tokenizer.decode(outputs[0])
-    match = re.search(r"<start_of_turn>model(.*?)<end_of_turn>", text, re.S) # This may need to change if you use a different model
-    response = match.group(1).strip() if match else text
+
+    response = text.split(START_OF_TURN_MARKER)[-1].split(END_OF_TURN_MARKER)[0].strip()
+    
     return response
