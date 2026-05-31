@@ -2,6 +2,7 @@
 Simple Python HTTP server for accessing a locally hosted LLM over the web or a VPN (like Tailscale).
 
 This is primarily intended for personal use of a local LLM, or for simple LLM enabled projects. It is not suitable for general deployment.
+
 **Get dependencies:**
 ```
 pip3 install fastapi uvicorn
